@@ -81,10 +81,16 @@
         border-bottom: #a99567 1px solid;
         color: #a99567;
       }
+
+		th                 { background-color : #557CBA; }
+		/* Alternance de couleur sur les lignes */
+		tr:nth-child(even) { background-color : #CED4E5; }
+		tr:nth-child(odd)  { background-color : #E8EBF5; }
+
     </style>
 </head>
 <body>
-<h2>Multiple Popup Forms</h2>
+<h2>Test technique</h2>
 <p>
     <button class="button" data-modal="modalOne">Ajouter société</button>
 </p>
@@ -92,10 +98,16 @@
     <button class="button" data-modal="modalTwo">Modifier société</button>
 </p>
 <p>
+    <button class="button" data-modal="modalSix">Supprimer société</button>
+</p>
+<p>
     <button class="button" data-modal="modalThr">Ajouter utilisateur</button>
 </p>
 <p>
     <button class="button" data-modal="modalFor">Modifier utilisateur</button>
+</p>
+<p>
+    <button class="button" data-modal="modalFiv">Supprimer utilisateur</button>
 </p>
 
 
@@ -103,14 +115,14 @@
     <div class="modal-content">
         <div class="contact-form">
             <a class="close">&times;</a>
-            <form enctype="multipart/form-data" action="/" method="post">
+            <form action="/" method="post">
                 <h2>Ajouter société</h2>
                 <div>
                     <input id="nameCompany" class="fname" type="text" name="nameCompany" placeholder="Nom de la société">
                     <input type="text" name="adresse" placeholder="adresse">
                     <input type="text" name="tel" placeholder="téléphone">
                     <input type="text" name="siteWeb" placeholder="site web">
-                    <input type="text" name="user" placeholder="utilisateur">
+                    <input type="text" name="iduser" placeholder="id utilisateur">
                 </div>
 
                 <button type="submit" href="/">Submit</button>
@@ -125,12 +137,12 @@
             <form action="/" method="post">
                 <h2>Modifier société</h2>
                 <div>
-                    <input class="fname" type="text" name="idEntreprise" placeholder="Full name">
+                    <input class="fname" type="text" name="idEntreprise" placeholder="id">
                     <input id="nameCompany" class="fname" type="text" name="nameCompany" placeholder="Full name">
                     <input type="text" name="adresse" placeholder="adresse">
                     <input type="text" name="tel" placeholder="téléphone">
                     <input type="text" name="siteWeb" placeholder="site web">
-                    <input type="text" name="user" placeholder="utilisateur">
+                    <input type="text" name="iduser" placeholder="id utilisateur">
                 </div>
                 <span>Message</span>
                 <div>
@@ -152,7 +164,8 @@
                     <input class="fname" type="text" name="firstName" placeholder="Full name">
                     <input type="text" name="adresse" placeholder="adresse">
                     <input type="text" name="tel" placeholder="téléphone">
-                    <input type="text" name="company" placeholder="company">
+                    <input type="text" name="email" placeholder="email">
+                    <input type="text" name="idcompany" placeholder="entreprise">
                 </div>
                 <span>Message</span>
                 <div>
@@ -170,13 +183,13 @@
             <form action="/" method="post">
                 <h2>Modifier utilisateur</h2>
                 <div>
-                    <input class="fname" type="text" name="idUser" placeholder="Full name">
+                    <input class="fname" type="text" name="idUser" placeholder="id">
                     <input id="nameUser" class="fname" type="text" name="nameUser" placeholder="Full name">
                     <input class="fname" type="text" name="firstName" placeholder="Full name">
                     <input type="text" name="adresse" placeholder="adresse">
                     <input type="text" name="tel" placeholder="téléphone">
-                    <input type="text" name="siteWeb" placeholder="site web">
-                    <input type="text" name="company" placeholder="company">
+                    <input type="text" name="email" placeholder="email">
+                    <input type="text" name="idcompany" placeholder="entreprise">
                 </div>
                 <span>Message</span>
                 <div>
@@ -187,6 +200,72 @@
         </div>
     </div>
 </div>
+
+<div id="modalFiv" class="modal">
+    <div class="modal-content">
+        <div class="contact-form">
+            <span class="close">&times;</span>
+            <form action="/" method="post">
+                <h2>Supprimer utilisateur</h2>
+                <div>
+                    <input class="fname" type="text" name="idUser" placeholder="id">
+                </div>
+                <span>Message</span>
+                <div>
+                    <textarea rows="4"></textarea>
+                </div>
+                <button type="submit" href="/">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="modalSix" class="modal">
+    <div class="modal-content">
+        <div class="contact-form">
+            <span class="close">&times;</span>
+            <form action="/" method="post">
+                <h2>Supprimer société</h2>
+                <div>
+                    <input class="fname" type="text" name="idEntreprise" placeholder="id">
+                </div>
+                <span>Message</span>
+                <div>
+                    <textarea rows="4"></textarea>
+                </div>
+                <button type="submit" href="/">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<h3>Companies</h3>
+<table>
+    <tr><th>id</th><th>Nom</th><th>Adresse</th><th>Téléphone</th><th>Site web</th><th>Utilisateurs</th></tr>
+    <% if(locals.companies){
+    locals.companies.forEach(function(company) { %>
+    <tr><td><%=company.id %></td><td><%=company.name %></td><td><%=company.address %></td><td><%=company.number %></td><td><%=company.webSite %></td><td><%=company.id_user %></td></tr>
+    <% }) } %>
+</table>
+<br>
+<h3>Users</h3>
+<table>
+
+    <tr><th>id</th><th>Nom</th><th>Prénom</th><th>Adresse</th><th>Téléphone</th><th>Email</th><th>Entreprises</th></tr>
+    <% if(locals.users){
+     locals.users.forEach(function(user) { %>
+    <tr><td><%=user.id %></td><td><%=user.name %></td><td><%=user.firstname %></td><td><%=user.address %></td><td><%=user.number %></td><td><%=user.email %></td><td><%=user.id_company %></td></tr>
+    <% }) }
+    else{
+    %>
+    <h4>ok</h4>
+    <% } %>
+</table>
+
 </body>
 <script>
       let modalBtns = [...document.querySelectorAll(".button")];

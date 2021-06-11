@@ -17,6 +17,7 @@ const Company = sequelize.define('company', {
     address: {type: Sequelize.STRING(255), allowNull: false},
     number: {type: Sequelize.STRING(255), allowNull: false},
     webSite: {type: Sequelize.STRING(255), allowNull: false},
+    id_user: {type: Sequelize.STRING(255), allowNull: false},
 
 },
         {tableName: 'company', timestamps: false, underscored: true}
@@ -33,11 +34,11 @@ const User = sequelize.define('user', {
       address: {type: Sequelize.STRING(255), allowNull: false, },
        number: {type: Sequelize.STRING(255), allowNull: false, },
     email: {type: Sequelize.STRING(255), allowNull: false, unique: true},
+     id_company: {type: Sequelize.STRING(255), allowNull: false, unique: true},
 },
         {tableName: 'user', timestamps: false, underscored: true}
 );
 exports.User = User;
 
-User.belongsTo(Company);//l'utilisateur à une société.
-Company.hasMany(User);
+
 sequelize.sync({logging: console.log});
